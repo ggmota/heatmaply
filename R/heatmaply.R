@@ -515,6 +515,8 @@ heatmaply.default <- function(x,
                               symm = FALSE,
                               revC,
 
+                              source = "A",
+
                               ## data scaling
                               scale = c("none", "row", "column"),
                               na.rm = TRUE,
@@ -710,6 +712,7 @@ heatmaply.default <- function(x,
     grid_color = grid_color,
     grid_gap = grid_gap,
     row_text_angle = row_text_angle,
+    source = source,
     column_text_angle = column_text_angle,
     subplot_margin = subplot_margin,
     row_dend_left = row_dend_left,
@@ -787,6 +790,7 @@ heatmaply.heatmapr <- function(x,
                                srtRow, srtCol,
                                xlab = "", ylab = "",
                                main = "",
+                               source = "A",
                                titleX = TRUE, titleY = TRUE,
                                hide_colorbar = FALSE,
                                key.title = NULL,
@@ -1061,11 +1065,11 @@ heatmaply.heatmapr <- function(x,
     return(list(p = p, px = px, py = py, pr = pr, pc = pc))
   } else {
     if (!is.null(pc)) {
-      pc <- ggplotly(pc)
+      pc <- ggplotly(pc, source = source)
       pc <- layout(pc, showlegend = TRUE)
     }
     if (!is.null(pr)) {
-      pr <- ggplotly(pr)
+      pr <- ggplotly(pr, source = source)
       pr <- layout(pr, showlegend = TRUE)
     }
   }
@@ -1073,7 +1077,7 @@ heatmaply.heatmapr <- function(x,
   ## plotly:
   # turn p, px, and py to plotly objects if necessary
   if (!is.plotly(p)) {
-    p <- ggplotly(p, dynamicTicks = dynamicTicks, tooltip = "text") %>%
+    p <- ggplotly(p, dynamicTicks = dynamicTicks, tooltip = "text", source = source) %>%
       layout(showlegend = TRUE)
   }
 
@@ -1099,11 +1103,11 @@ heatmaply.heatmapr <- function(x,
     )
   }
   if (!is.null(px) && !is.plotly(px)) {
-    px <- ggplotly(px, tooltip = "y", dynamicTicks = dynamicTicks) %>%
+    px <- ggplotly(px, tooltip = "y", dynamicTicks = dynamicTicks, source = source) %>%
       layout(showlegend = FALSE)
   }
   if (!is.null(py) && !is.plotly(py)) {
-    py <- ggplotly(py, tooltip = "y", dynamicTicks = dynamicTicks) %>%
+    py <- ggplotly(py, tooltip = "y", dynamicTicks = dynamicTicks, source = source) %>%
       layout(showlegend = FALSE)
   }
 
